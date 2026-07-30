@@ -2,6 +2,15 @@ def evaluar_condiciones(altura_ola, periodo, velocidad_corriente, dir_corriente=
     """
     Evalúa las condiciones del mar y viento para buceo recreativo/técnico.
     """
+    # 0. SANEAMIENTO DE DATOS (Prevención de TypeErrors si la API devuelve strings o Nones)
+    try:
+        altura_ola = float(altura_ola) if altura_ola is not None else 0.0
+        periodo = float(periodo) if periodo is not None else 0.0
+        velocidad_corriente = float(velocidad_corriente) if velocidad_corriente is not None else 0.0
+        vel_viento = float(vel_viento) if vel_viento is not None else 0.0
+    except ValueError:
+        return "❌ Error: La API meteorológica ha devuelto un formato de datos no válido."
+
     alertas = []
     
     # 1. EVALUACIÓN DE LA OLA (ALTURA)
@@ -30,8 +39,8 @@ def evaluar_condiciones(altura_ola, periodo, velocidad_corriente, dir_corriente=
         eval_corriente = f"🔴 Corriente fuerte ({velocidad_corriente:.2f} kn). Precaución."
         alertas.append("Corriente fuerte")
 
-    # 4. EVALUACIÓN DEL VIENTO (NUEVO)
-    if vel_viento is not None:
+    # 4. EVALUACIÓN DEL VIENTO
+    if vel_viento > 0:
         if vel_viento < 15.0:
             eval_viento = f"🟢 Viento flojo ({vel_viento:.1f} km/h)."
         elif 15.0 <= vel_viento <= 25.0:
@@ -40,24 +49,24 @@ def evaluar_condiciones(altura_ola, periodo, velocidad_corriente, dir_corriente=
             eval_viento = f"🔴 Viento fuerte ({vel_viento:.1f} km/h). Deriva y oleaje local agitado."
             alertas.append("Viento fuerte")
     else:
-        eval_viento = "⚪ Viento: Sin datos"
+        eval_viento = "⚪ Viento: Sin datos o en calma"
 
     # 5. DETERMINACIÓN DEL ESTADO GLOBAL
     if "🔴" in eval_ola or "🔴" in eval_corriente or "🔴" in eval_viento:
-        estado_global = "🔴 CONDICIONES DESFAVORABLES / PRECAUCIÓN EXTREMA"
+        estado_global = "🔴 *CONDICIONES DESFAVORABLES / PRECAUCIÓN EXTREMA*"
     elif "🟡" in eval_ola or "🟡" in eval_periodo or "🟡" in eval_corriente or "🟡" in eval_viento:
-        estado_global = "🟡 CONDICIONES ACEPTABLES CON PRECAUCIÓN"
+        estado_global = "🟡 *CONDICIONES ACEPTABLES CON PRECAUCIÓN*"
     else:
-        estado_global = "🟢 CONDICIONES ÓPTIMAS"
+        estado_global = "🟢 *CONDICIONES ÓPTIMAS*"
 
-    # CONSTRUCCIÓN DEL REPORTE FINAL
+    # 6. CONSTRUCCIÓN DEL REPORTE FINAL (Ajustado para encajar en main.py)
     reporte = (
-        f"--- EVALUACIÓN DE BUCEO ---\n"
-        f"Estado global: {estado_global}\n\n"
-        f"• Oleaje: {eval_ola}\n"
-        f"• Período: {eval_periodo}\n"
-        f"• Viento: {eval_viento}\n"
-        f"• Corriente: {eval_corriente}\n"
+        f"{estado_global}\n\n"
+        f"🔹 *Desglose técnico:*\n"
+        f"• {eval_ola}\n"
+        f"• {eval_periodo}\n"
+        f"• {eval_viento}\n"
+        f"• {eval_corriente}"
     )
 
     return reporte
