@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tenerife Dive Meteo</title>
+    <meta name="description" content="Predicción meteorológica y marítima para puntos de buceo en Tenerife.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <svg class="dive-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12s4.477 10 10 10 10-4.477 10-10z"></path>
+                <path d="M12 8v4l3 3"></path>
+            </svg>
+            <h1>Tenerife Dive Meteo</h1>
+        </div>
+        <p>Condiciones en tiempo real y previsión para los mejores puntos de inmersión</p>
+    </header>
+
+    <main>
+        <section class="selection-section">
+            <label for="dive-spot">Selecciona un punto de buceo:</label>
+            <select id="dive-spot" class="custom-select">
+                <option value="" disabled selected>Elige un punto...</option>
+                <!-- Opciones cargadas vía JS -->
+            </select>
+        </section>
+
+        <section id="results-section" class="results-section hidden">
+            <h2 id="selected-spot-name">Punto seleccionado</h2>
+            
+            <div class="dashboard-top">
+                <div class="forecast-container">
+                    <!-- Tarjeta Hoy -->
+                <div class="forecast-card today">
+                    <h3>Hoy <span class="badge">Actual</span></h3>
+                    <div class="metrics">
+                        <div class="metric">
+                            <span class="icon">🌊</span>
+                            <div class="metric-info">
+                                <span class="label">Oleaje</span>
+                                <span class="value" id="today-wave-height">-- m</span>
+                                <span class="detail" id="today-wave-dir">Dir: --</span>
+                                <span class="detail" id="today-wave-period">Periodo: -- s</span>
+                            </div>
+                        </div>
+                        <div class="metric">
+                            <span class="icon">🌡️</span>
+                            <div class="metric-info">
+                                <span class="label">Temp. Exterior</span>
+                                <span class="value" id="today-temp">-- °C</span>
+                            </div>
+                        </div>
+                        <div class="metric">
+                            <span class="icon">💧</span>
+                            <div class="metric-info">
+                                <span class="label">Temp. Agua</span>
+                                <span class="value" id="today-water-temp">-- °C</span>
+                            </div>
+                        </div>
+                        <div class="metric">
+                            <span class="icon">🌬️</span>
+                            <div class="metric-info">
+                                <span class="label">Viento</span>
+                                <span class="value" id="today-wind-speed">-- km/h</span>
+                                <span class="detail" id="today-wind-dir">Dir: --</span>
+                            </div>
+                        </div>
+                        <div class="metric">
+                            <span class="icon">🌀</span>
+                            <div class="metric-info">
+                                <span class="label">Corriente Fondo</span>
+                                <span class="value" id="today-current-speed">-- km/h</span>
+                                <span class="detail" id="today-current-dir">Dir: --</span>
+                            </div>
+                        </div>
+                        <div class="metric">
+                            <span class="icon">☀️</span>
+                            <div class="metric-info">
+                                <span class="label">Visibilidad / Sol</span>
+                                <span class="value" id="today-uv">UV: --</span>
+                                <span class="detail" id="today-clouds">Nubes: --%</span>
+                            </div>
+                        </div>
+                        <div class="metric">
+                            <span class="icon">↕️</span>
+                            <div class="metric-info">
+                                <span class="label">Mareas (Horas aprox.)</span>
+                                <span class="value" id="today-tide-high">Pleamar: --</span>
+                                <span class="detail" id="today-tide-low">Bajamar: --</span>
+                                <span class="detail" id="today-tide-coef">Coeficiente: --</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tarjeta Mañana -->
+                <div class="forecast-card tomorrow">
+                    <h3>Mañana <span class="badge future">Previsión</span></h3>
+                    <div class="metrics">
+                        <div class="metric">
+                            <span class="icon">🌊</span>
+                            <div class="metric-info">
+                                <span class="label">Oleaje Promedio</span>
+                                <span class="value" id="tomorrow-wave-height">-- m</span>
+                                <span class="detail" id="tomorrow-wave-dir">Dir: --</span>
+                                <span class="detail" id="tomorrow-wave-period">Periodo: -- s</span>
+                            </div>
+                        </div>
+                        <div class="metric">
+                            <span class="icon">🌡️</span>
+                            <div class="metric-info">
+                                <span class="label">Temp. Máxima</span>
+                                <span class="value" id="tomorrow-temp">-- °C</span>
+                            </div>
+                        </div>
+                        <div class="metric">
+                            <span class="icon">💧</span>
+                            <div class="metric-info">
+                                <span class="label">Temp. Agua</span>
+                                <span class="value" id="tomorrow-water-temp">-- °C</span>
+                            </div>
+                        </div>
+                        <div class="metric">
+                            <span class="icon">🌬️</span>
+                            <div class="metric-info">
+                                <span class="label">Viento Promedio</span>
+                                <span class="value" id="tomorrow-wind-speed">-- km/h</span>
+                                <span class="detail" id="tomorrow-wind-dir">Dir: --</span>
+                            </div>
+                        </div>
+                        <div class="metric">
+                            <span class="icon">🌀</span>
+                            <div class="metric-info">
+                                <span class="label">Corriente Fondo</span>
+                                <span class="value" id="tomorrow-current-speed">-- km/h</span>
+                                <span class="detail" id="tomorrow-current-dir">Dir: --</span>
+                            </div>
+                        </div>
+                        <div class="metric">
+                            <span class="icon">☀️</span>
+                            <div class="metric-info">
+                                <span class="label">Visibilidad / Sol</span>
+                                <span class="value" id="tomorrow-uv">UV: --</span>
+                                <span class="detail" id="tomorrow-clouds">Nubes: --%</span>
+                            </div>
+                        </div>
+                        <div class="metric">
+                            <span class="icon">↕️</span>
+                            <div class="metric-info">
+                                <span class="label">Mareas (Horas aprox.)</span>
+                                <span class="value" id="tomorrow-tide-high">Pleamar: --</span>
+                                <span class="detail" id="tomorrow-tide-low">Bajamar: --</span>
+                                <span class="detail" id="tomorrow-tide-coef">Coeficiente: --</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="map-card">
+                <h3>📍 Mapa y Direcciones (Hoy)</h3>
+                <div id="map" class="map-container"></div>
+                <div class="map-legend">
+                    <span class="legend-item"><span class="legend-color wind-color"></span> Viento</span>
+                    <span class="legend-item"><span class="legend-color wave-color"></span> Oleaje</span>
+                    <span class="legend-item"><span class="legend-color current-color"></span> Corriente</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="advice-card">
+            <h3>💡 Recomendaciones de Buceo (Hoy)</h3>
+            <ul id="dive-advice-list">
+                <!-- Se rellena con JS -->
+            </ul>
+        </div>
+
+            <div class="chart-card">
+                <h3>🌊 Evolución de Mareas (48h)</h3>
+                <div class="chart-wrapper">
+                    <canvas id="tideChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="info-note">
+                <p>Datos proporcionados por <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a> y <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>. Las condiciones del mar pueden cambiar rápidamente, bucea siempre con precaución y consulta a los centros locales.</p>
+            </div>
+        </section>
+        
+        <div id="loading" class="loading hidden">
+            <div class="spinner"></div>
+            <p>Obteniendo datos...</p>
+        </div>
+    </main>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

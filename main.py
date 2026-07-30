@@ -3,7 +3,7 @@ import json
 import logging
 import threading
 from flask import Flask
-from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup, WebAppInfo
 from telegram.ext import ApplicationBuilder, CommandHandler, CallbackQueryHandler, ContextTypes
 from consultar_mar import obtener_datos_marinos
 from evaluador import evaluar_inmersion  # <-- CORREGIDO: Importación actualizada
@@ -32,16 +32,20 @@ logging.basicConfig(
 # TOKEN seguro a través de variables de entorno
 TOKEN = os.getenv("TELEGRAM_TOKEN")
 
+# URL de GitHub Pages donde está alojada la Web App
+WEBAPP_URL = "https://estiati.github.io/bot-buceo-tenerife/webapp/"
+
 def cargar_zonas():
     with open("zonas_tenerife.json", "r", encoding="utf-8") as f:
         # Cargamos directamente el diccionario completo con la nueva estructura
         return json.load(f)
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    # Primer nivel: Selección de vertiente
+    # Primer nivel: Selección de vertiente o Web App
     keyboard = [
         [InlineKeyboardButton("🌊 Vertiente Norte", callback_data="MENU_Norte")],
-        [InlineKeyboardButton("🏖️ Vertiente Sur", callback_data="MENU_Sur")]
+        [InlineKeyboardButton("🏖️ Vertiente Sur", callback_data="MENU_Sur")],
+        [InlineKeyboardButton("🗺️ Abrir Mapa y Mareas Interactivo", web_app=WebAppInfo(url=WEBAPP_URL))]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     mensaje = (
@@ -126,8 +130,9 @@ async def manejar_botones(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 f"📝 *Evaluación:* {evaluacion}"
             )
             
-            # Botones para volver rápido sin teclear /start
+            # Botones para volver rápido sin teclear /start o abrir el mapa
             keyboard = [
+                [InlineKeyboardButton("🗺️ Ver Gráficas y Mapa de esta Zona", web_app=WebAppInfo(url=WEBAPP_URL))],
                 [InlineKeyboardButton(f"⬅️ Volver a {spot['vertiente']}", callback_data=f"MENU_{spot['vertiente']}")],
                 [InlineKeyboardButton("🏠 Menú Principal", callback_data="VOLVER_INICIO")]
             ]
