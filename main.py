@@ -5,7 +5,7 @@ from flask import Flask
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ApplicationBuilder, CommandHandler, CallbackQueryHandler, ContextTypes
 from consultar_mar import obtener_datos_marinos
-from evaluador import evaluar_condiciones  # <-- CORREGIDO AQUÍ
+from evaluador import evaluar_condiciones
 
 # Servidor web Flask para que Render mantenga el Web Service activo
 app_web = Flask('')
@@ -65,14 +65,27 @@ async def responder_zona(update: Update, context: ContextTypes.DEFAULT_TYPE):
     datos = obtener_datos_marinos(spot["latitud"], spot["longitud"])
     
     if datos:
-        evaluacion = evaluar_condiciones(datos)  # <-- CORREGIDO AQUÍ
+        # Extraemos los datos con las claves correctas en español
+        altura_ola = datos.get("altura_ola", 0)
+        periodo = datos.get("periodo", 0)
+        vel_corriente = datos.get("vel_corriente", 0)
+        dir_corriente = datos.get("dir_corriente", 0)
+        vel_viento = datos.get("vel_viento", 0)
+        dir_viento = datos.get("dir_viento", 0)
+        dir_ola = datos.get("dir_ola", 0)
+
+        # Pasamos los argumentos individuales a evaluar_condiciones
+        evaluacion = evaluar_condiciones(altura_ola, periodo, vel_corriente, dir_corriente, vel_viento, dir_viento)
+        
+        # Construimos el mensaje con los datos actualizados
         mensaje = (
             f"📍 *{spot['nombre']}*\n"
             f"ℹ️ _{spot['descripcion']}_\n\n"
             f"📊 *Datos Actuales:*\n"
-            f"• Ola: {datos.get('wave_height', 'N/A')} m ({datos.get('wave_direction', 'N/A')}°)\n"
-            f"• Periodo: {datos.get('wave_period', 'N/A')} s\n"
-            f"• Corriente: {datos.get('ocean_current_velocity', 0) * 1.94:.1f} kn ({datos.get('ocean_current_direction', 'N/A')}°)\n\n"
+            f"• Ola: {altura_ola} m ({dir_ola}°)\n"
+            f"• Periodo: {periodo} s\n"
+            f"• Viento: {vel_viento} km/h ({dir_viento}°)\n"
+            f"• Corriente: {vel_corriente} kn ({dir_corriente}°)\n\n"
             f"{evaluacion}"
         )
     else:
