@@ -1,102 +1,48 @@
 {
-  "zonas": {
-    "radazul": {
-      "nombre": "Radazul / El Rosario",
-      "latitud": 28.4025,
-      "longitud": -16.3236,
-      "orientacion": "SE",
-      "descripcion": "Zona resguardada del Norte/NW. Propensa a corriente de deriva hacia el Sur en vaciante."
-    },
-    "tabaiba": {
-      "nombre": "Tabaiba (Pecio El Peñón)",
-      "latitud": 28.4061,
-      "longitud": -16.3150,
-      "orientacion": "SE",
-      "descripcion": "Inmersión de pecio/pared. Buena visibilidad habitual. Resguardada de vientos del Norte."
-    },
-    "punta_prieta": {
-      "nombre": "Punta Prieta / Güímar",
-      "latitud": 28.2861,
-      "longitud": -16.3781,
-      "orientacion": "E",
-      "descripcion": "Inmersión en cueva y cúpula. Fuerte corriente de marea en las puntas exteriores."
-    },
-    "poris": {
-      "nombre": "El Porís de Abona",
-      "latitud": 28.1633,
-      "longitud": -16.4294,
-      "orientacion": "SE",
-      "descripcion": "Entrada fácil desde bahía. Expuesto al alisio/viento del Este. Corriente en la salida de la bahía."
-    },
-    "las_galletas": {
-      "nombre": "Las Galletas / Marina Sur",
-      "latitud": 28.0053,
-      "longitud": -16.6578,
-      "orientacion": "S",
-      "descripcion": "Expuesto a mar de fondo del Sur/SW. Zona de fondos someros y plataformas."
-    },
-    "los_cristianos": {
-      "nombre": "Los Cristianos / Los Chuchos",
-      "latitud": 28.0489,
-      "longitud": -16.7214,
-      "orientacion": "SW",
-      "descripcion": "Inmersión en bahía/arenal. Resguardado del alisio pero expuesto a marejadas del SW."
-    },
-    "el_puertito": {
-      "nombre": "El Puertito de Armeñime",
-      "latitud": 28.1189,
-      "longitud": -16.7628,
-      "orientacion": "SW",
-      "descripcion": "Bahía muy resguardada. Ideal para bautismos e inmersiones sencillas. Poco viento habitual."
-    },
-    "alcala": {
-      "nombre": "Alcalá / Cueva de los Cerebros",
-      "latitud": 28.1983,
-      "longitud": -16.8317,
-      "orientacion": "W",
-      "descripcion": "Red de cuevas volcánicas. Sensible a marejadas del Oeste/NW y corrientes de costa."
-    },
-    "los_gigantes": {
-      "nombre": "Acantilados de Los Gigantes",
-      "latitud": 28.2464,
-      "longitud": -16.8419,
-      "orientacion": "W",
-      "descripcion": "Protegido por acantilados, pero con corrientes de canal en la desembocadura de barrancos."
-    },
-    "punta_de_teno": {
-      "nombre": "Punta de Teno",
-      "latitud": 28.3422,
-      "longitud": -16.9208,
-      "orientacion": "NW",
-      "descripcion": "Zona técnica muy expuesta. Fuertes corrientes de confluencia Norte-Sur y mar de fondo."
-    },
-    "garachico": {
-      "nombre": "Garachico / El Caletón",
-      "latitud": 28.3736,
-      "longitud": -16.7644,
-      "orientacion": "N",
-      "descripcion": "Muy expuesto al mar de fondo del Norte y NW. Requiere periodo bajo y poco oleaje."
-    },
-    "puerto_cruz": {
-      "nombre": "Puerto de la Cruz / El Faro",
-      "latitud": 28.4186,
-      "longitud": -16.5539,
-      "orientacion": "N",
-      "descripcion": "Formaciones de lava y basaltos. Expuesto a marejadas del Norte. Ojos con resaca de pared."
-    },
-    "mesa_del_mar": {
-      "nombre": "Mesa del Mar / Tacoronte",
-      "latitud": 28.4967,
-      "longitud": -16.4292,
-      "orientacion": "NW",
-      "descripcion": "Túneles y pasadizos volcánicos. Muy sensible al mar de fondo del NW."
-    },
-    "jover": {
-      "nombre": "Jover / Tejina",
-      "latitud": 28.5369,
-      "longitud": -16.3578,
-      "orientacion": "N",
-      "descripcion": "Plataforma rocosa expuesta. Fuertes corrientes de marea paralelas a la costa."
-    }
-  }
+  "Bajamar": { "lat": 28.5552, "lon": -16.3456, "vertiente": "Norte" },
+  "Benijo": { "lat": 28.5762, "lon": -16.1859, "vertiente": "Norte" },
+  "Buenavista del Norte": { "lat": 28.3733, "lon": -16.8504, "vertiente": "Norte" },
+  "El Bollullo": { "lat": 28.4192, "lon": -16.5208, "vertiente": "Norte" },
+  "El Pris": { "lat": 28.5085, "lon": -16.4184, "vertiente": "Norte" },
+  "El Sauzal (Rojas)": { "lat": 28.4878, "lon": -16.4442, "vertiente": "Norte" },
+  "El Socorro": { "lat": 28.3957, "lon": -16.6025, "vertiente": "Norte" },
+  "Garachico": { "lat": 28.3734, "lon": -16.7653, "vertiente": "Norte" },
+  "Icod de los Vinos": { "lat": 28.3789, "lon": -16.7202, "vertiente": "Norte" },
+  "Los Silos": { "lat": 28.3811, "lon": -16.8164, "vertiente": "Norte" },
+  "Mesa del Mar": { "lat": 28.5025, "lon": -16.4231, "vertiente": "Norte" },
+  "Puerto de la Cruz": { "lat": 28.4165, "lon": -16.5469, "vertiente": "Norte" },
+  "Punta del Hidalgo": { "lat": 28.5714, "lon": -16.3292, "vertiente": "Norte" },
+  "San Juan de la Rambla": { "lat": 28.3925, "lon": -16.6475, "vertiente": "Norte" },
+  "Santa Ursula": { "lat": 28.4239, "lon": -16.4914, "vertiente": "Norte" },
+  "Taganana": { "lat": 28.5721, "lon": -16.2001, "vertiente": "Norte" },
+  "Valle de Guerra": { "lat": 28.5303, "lon": -16.3989, "vertiente": "Norte" },
+  "Abades": { "lat": 28.1419, "lon": -16.4428, "vertiente": "Sur" },
+  "Alcala": { "lat": 28.2045, "lon": -16.8272, "vertiente": "Sur" },
+  "Boca Cangrejo": { "lat": 28.4128, "lon": -16.3159, "vertiente": "Sur" },
+  "Callao Salvaje": { "lat": 28.1258, "lon": -16.7772, "vertiente": "Sur" },
+  "Candelaria": { "lat": 28.3551, "lon": -16.3703, "vertiente": "Sur" },
+  "Costa Adeje": { "lat": 28.0833, "lon": -16.7333, "vertiente": "Sur" },
+  "El Medano": { "lat": 28.0458, "lon": -16.5367, "vertiente": "Sur" },
+  "El Poris": { "lat": 28.1611, "lon": -16.4325, "vertiente": "Sur" },
+  "Fonsalia": { "lat": 28.1883, "lon": -16.8219, "vertiente": "Sur" },
+  "Igueste de San Andres": { "lat": 28.5367, "lon": -16.1558, "vertiente": "Sur" },
+  "La Caleta": { "lat": 28.1022, "lon": -16.7531, "vertiente": "Sur" },
+  "La Jaca": { "lat": 28.1256, "lon": -16.4603, "vertiente": "Sur" },
+  "Las Americas": { "lat": 28.0583, "lon": -16.7297, "vertiente": "Sur" },
+  "Las Eras": { "lat": 28.1824, "lon": -16.4172, "vertiente": "Sur" },
+  "Las Galletas": { "lat": 28.0101, "lon": -16.6579, "vertiente": "Sur" },
+  "Las Teresitas": { "lat": 28.5089, "lon": -16.1856, "vertiente": "Sur" },
+  "Los Abrigos": { "lat": 28.0319, "lon": -16.6042, "vertiente": "Sur" },
+  "Los Cristianos": { "lat": 28.0526, "lon": -16.7176, "vertiente": "Sur" },
+  "Los Gigantes": { "lat": 28.2436, "lon": -16.8406, "vertiente": "Sur" },
+  "Palm-Mar": { "lat": 28.0194, "lon": -16.6975, "vertiente": "Sur" },
+  "Playa Paraiso": { "lat": 28.1189, "lon": -16.7725, "vertiente": "Sur" },
+  "Playa San Juan": { "lat": 28.1764, "lon": -16.8122, "vertiente": "Sur" },
+  "Puertito de Guimar": { "lat": 28.3006, "lon": -16.3789, "vertiente": "Sur" },
+  "Puerto de Santiago": { "lat": 28.2344, "lon": -16.8389, "vertiente": "Sur" },
+  "Punta Prieta": { "lat": 28.2719, "lon": -16.3934, "vertiente": "Sur" },
+  "Radazul": { "lat": 28.4065, "lon": -16.3223, "vertiente": "Sur" },
+  "San Miguel de Abona": { "lat": 28.0264, "lon": -16.6178, "vertiente": "Sur" },
+  "Tabaiba": { "lat": 28.4025, "lon": -16.3263, "vertiente": "Sur" },
+  "Tajao": { "lat": 28.1092, "lon": -16.4719, "vertiente": "Sur" }
 }
