@@ -1,4 +1,4 @@
-def evaluar_condiciones(altura_ola, periodo, velocidad_corriente, dir_corriente=None, vel_viento=None, dir_viento=None):
+def evaluar_inmersion(altura_ola, periodo, velocidad_corriente, dir_corriente=None, vel_viento=None, dir_viento=None):
     """
     Evalúa las condiciones del mar y viento para buceo recreativo/técnico.
     """
