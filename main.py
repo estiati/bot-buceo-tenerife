@@ -6,10 +6,10 @@ from flask import Flask
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ApplicationBuilder, CommandHandler, CallbackQueryHandler, ContextTypes
 from consultar_mar import obtener_datos_marinos
-from evaluador import evaluar_condiciones
+from evaluador import evaluar_inmersion  # <-- CORREGIDO: Importación actualizada
 
 # Servidor web Flask para que Render mantenga el Web Service activo
-app_web = Flask('')
+app_web = Flask(__name__)
 
 @app_web.route('/')
 def home():
@@ -113,8 +113,8 @@ async def manejar_botones(update: Update, context: ContextTypes.DEFAULT_TYPE):
             dir_viento = datos_mar.get("dir_viento", 0)
             dir_ola = datos_mar.get("dir_ola", 0)
 
-            # Llamada al evaluador (que arreglaremos ahora)
-            evaluacion = evaluar_condiciones(altura_ola, periodo, vel_corriente, dir_corriente, vel_viento, dir_viento)
+            # <-- CORREGIDO: Llamada al evaluador con el nombre correcto
+            evaluacion = evaluar_inmersion(altura_ola, periodo, vel_corriente, dir_corriente, vel_viento, dir_viento)
             
             mensaje = (
                 f"📍 *{nombre_zona}* (Vertiente {spot['vertiente']})\n\n"
