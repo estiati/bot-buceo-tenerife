@@ -2,6 +2,7 @@ import os
 import json
 import logging
 import threading
+import urllib.parse
 from flask import Flask
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup, WebAppInfo
 from telegram.ext import ApplicationBuilder, CommandHandler, CallbackQueryHandler, ContextTypes
@@ -130,9 +131,13 @@ async def manejar_botones(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 f"📝 *Evaluación:* {evaluacion}"
             )
             
+            # Codificamos el nombre de la zona para pasarlo por URL
+            zona_codificada = urllib.parse.quote(nombre_zona)
+            url_zona = f"{WEBAPP_URL}?spot={zona_codificada}"
+            
             # Botones para volver rápido sin teclear /start o abrir el mapa
             keyboard = [
-                [InlineKeyboardButton("🗺️ Ver Gráficas y Mapa de esta Zona", web_app=WebAppInfo(url=WEBAPP_URL))],
+                [InlineKeyboardButton("🗺️ Ver Gráficas y Mapa de esta Zona", web_app=WebAppInfo(url=url_zona))],
                 [InlineKeyboardButton(f"⬅️ Volver a {spot['vertiente']}", callback_data=f"MENU_{spot['vertiente']}")],
                 [InlineKeyboardButton("🏠 Menú Principal", callback_data="VOLVER_INICIO")]
             ]

@@ -48,25 +48,41 @@ const diveSpots = [
 ];
 
 document.addEventListener("DOMContentLoaded", () => {
+    populateSpotSelector();
+    
+    const spotSelect = document.getElementById("dive-spot");
+    
+    // Leer si venimos de Telegram con una zona específica (?spot=NombreZona)
+    const urlParams = new URLSearchParams(window.location.search);
+    const spotParam = urlParams.get('spot');
+    
+    if (spotParam) {
+        // Buscar el índice de la zona por nombre
+        const spotIndex = diveSpots.findIndex(s => s.name.toLowerCase() === spotParam.toLowerCase());
+        if (spotIndex !== -1) {
+            spotSelect.value = spotIndex;
+        }
+    }
+
+    // Cargar los datos de la zona seleccionada (o la primera por defecto)
+    fetchData(diveSpots[spotSelect.value]);
+    
+    spotSelect.addEventListener("change", (e) => {
+        const spot = diveSpots[e.target.value];
+        fetchData(spot);
+    });
+});
+
+function populateSpotSelector() {
     const select = document.getElementById("dive-spot");
-    
-    // Poblar el selector de forma alfabética
     diveSpots.sort((a, b) => a.name.localeCompare(b.name));
-    
     diveSpots.forEach((spot, index) => {
         const option = document.createElement("option");
         option.value = index;
         option.textContent = spot.name;
         select.appendChild(option);
     });
-
-    select.addEventListener("change", (e) => {
-        const index = e.target.value;
-        if (index !== "") {
-            fetchData(diveSpots[index]);
-        }
-    });
-});
+}
 
 async function fetchData(spot) {
     const resultsSection = document.getElementById("results-section");
