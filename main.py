@@ -5,7 +5,7 @@ from flask import Flask
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ApplicationBuilder, CommandHandler, CallbackQueryHandler, ContextTypes
 from consultar_mar import obtener_datos_marinos
-from evaluador import evaluar_inmersion
+from evaluador import evaluar_condiciones  # <-- CORREGIDO AQUÍ
 
 # Servidor web Flask para que Render mantenga el Web Service activo
 app_web = Flask('')
@@ -65,7 +65,7 @@ async def responder_zona(update: Update, context: ContextTypes.DEFAULT_TYPE):
     datos = obtener_datos_marinos(spot["latitud"], spot["longitud"])
     
     if datos:
-        evaluacion = evaluar_inmersion(datos)
+        evaluacion = evaluar_condiciones(datos)  # <-- CORREGIDO AQUÍ
         mensaje = (
             f"📍 *{spot['nombre']}*\n"
             f"ℹ️ _{spot['descripcion']}_\n\n"
